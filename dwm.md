@@ -469,4 +469,45 @@ while true; do
 done
 ```
 ### dwmblocks 
-(see dwmblocks.md)
+Dwmblocks is a third-party status bar for dwm.
+
+To install it:
+```
+$ git clone https://github.com/torrinfail/dwmblocks
+```
+Or your own build as link.
+
+Then:
+```
+$ cd dwmblocks
+```
+```
+$ sudo make install
+```
+
+It works with different 'blocks' that can be updated individually.
+
+These blocks are just pieces of text that can be either static or variable via a shell script.
+
+Here is my config as an example:
+```
+static const Block blocks[] = {
+	/*Icon*/ /*Command*/      /*Update Interval*/ /*Update Signal*/
+	{"",     "sb-wifi",       5,                  0},
+	{"",     "sb-brightness", 0,                  2},
+	{"",     "sb-volume",     0,                  1},
+	{"",     "sb-battery",    5,                  0},
+	{"",     "sb-time",       5,                  0},
+};
+```
+As you can see I have 5 different blocks, the 'command' column contains the shell scripts I have created and added to my path in order to execute them.
+
+The update interval is how often the block updates in seconds, if it is set to 0 then it will only update via a signal.
+
+These signals can be send like this:
+```
+$ kill -35 $(pidof dwmblocks)
+```
+-35 changes depending on the signal number, to get the number for the command, add 34 to the signal number and then get the negative of that number.
+
+So number 1 = -35, because 1+34=35 and 35*-1=-35
